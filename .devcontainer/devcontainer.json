@@ -1,0 +1,35 @@
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"name": "Adaptive Framework Core",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "afw",
+	"workspaceMount": "source=afw-workspace-vol,target=/workspace,type=volume",
+	"workspaceFolder": "/workspace",
+
+	"mounts": [
+		"source=afw-workspace-bashhistory,target=/commandhistory,type=volume",
+		"source=afw-workspace-extensions,target=/root/.vscode-server/extensions,type=volume",    	
+    	"source=afw-workspace-extensions-insiders,target=/root/.vscode-server-insiders/extensions,type=volume"
+	],
+	
+	// Use 'settings' to set *default* container specific settings.json values on container create. 
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	"settings": { 				
+		"remote.extensionKind": {
+			"ms-azuretools.vscode-docker": "workspace"
+		},
+		"terminal.integrated.defaultProfile.linux": "bash"
+	},	
+
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	"shutdownAction": "none",		
+
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	"extensions": [
+		"ms-azuretools.vscode-docker"
+	],
+
+	"postCreateCommand": ".devcontainer/scripts/postCreateCommand.sh",
+	"postAttachCommand": ".devcontainer/scripts/postAttachCommand.sh",
+	"postStartCommand": ".devcontainer/scripts/postStartCommand.sh"		
+}
